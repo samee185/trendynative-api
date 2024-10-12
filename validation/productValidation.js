@@ -22,6 +22,10 @@ const validateCreateProduct = (object) => {
       .string()
       .required()
       .error(new Error("Please provide a product category")),
+    size: joi
+      .string()
+      .required()
+      .error(new Error("Please provide a product category")),
   });
   return schema.validate(object);
 };
