@@ -35,4 +35,6 @@ const ensureMinImages = (req, res, next) => {
   }
   next(); 
 };
-module.exports = { dataUri, imageUploads };
+
+
+module.exports = { dataUri, imageUploads, ensureMinImages };
