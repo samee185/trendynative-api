@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Your Email</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #6a1b9a;
+        padding: 20px;
+        text-align: center;
+        color: #ffffff;
+      }
+      .header img {
+        max-width: 150px;
+        margin-bottom: 10px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .content h2 {
+        color: #333;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .content p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+      .content a.button {
+        background-color: #6a1b9a;
+        color: #ffffff;
+        padding: 12px 25px;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+      .footer {
+        padding: 20px;
+        text-align: center;
+        color: #999;
+        font-size: 14px;
+        background-color: #f4f4f4;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header section with logo and title -->
+      <div class="header">
+        <img src="{{logo}}" alt="Trendy Native Wears Logo" />
+        <h1>Verify Your Email</h1>
+      </div>
+
+      <!-- Main content -->
+      <div class="content">
+        <h2>Welcome to Trendy Native Wears, {{firstname}}!</h2>
+        <p>
+          Thank you for signing up. To complete your registration, please verify
+          your email address by clicking the button below.
+        </p>
+        <a href="{{verificationUrl}}" class="button">Verify Email</a>
+      </div>
+
+      <!-- Footer section -->
+      <div class="footer">
+        <p>
+          If you didn’t request this email, please ignore it. This email is only
+          valid for 24 hours.
+        </p>
+        <p>&copy; 2024 Trendy Native Wears. All rights reserved.</p>
+      </div>
+    </div>
+  </body>
+</html>

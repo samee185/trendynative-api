@@ -15,18 +15,10 @@ router
   .get(getAllProducts)
   .post(authMiddleware.protectRoute, imageUploads, createNewProduct);
 
-// router
-//   .route("/admin")
-//   .get(
-//     authMiddleware.protectRoute,
-//     authMiddleware.verifyIsAdmin,
-//     getAllProductsByAdmin
-//   );
-
 router
   .route("/:id")
   .get(getProductDetails)
-  .patch(updateProductDetails)
-  .delete(deleteProduct);
+  .patch(authMiddleware.protectRoute, authMiddleware.verifyIsAdmin, updateProductDetails)
+  .delete(authMiddleware.protectRoute, authMiddleware.verifyIsAdmin, deleteProduct);
 
 module.exports = router;
