@@ -104,8 +104,8 @@ const createAdminUser = async (req, res, next) => {
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const adminUser = await Users.create({
-      firstName,
-      lastName,
+      firstname,
+      lastname,
       email,
       password: hashedPassword,
       role: "admin",
