@@ -5,78 +5,87 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome Email</title>
     <style>
-        
-        body{
-            padding: 6px;
-        } 
-        
-        h1, p {
-            text-align: center;
-        }
-        body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
-        }   
-        .email-container {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-        }
-        .email-header {
-            text-align: center;
-            padding-bottom: 20px;
-        }
-        .email-header img {
-            max-width: 150px;
-        }
-        .email-body {
-            text-align: center;
-            color: #333;
-        }
-        .email-body h1 {
-            font-size: 24px;
-            color: #6a1b9a; 
-        }
-        .email-body p {
-            font-size: 16px;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-        .email-body a {
-            display: inline-block;
-            background-color: #6a1b9a; 
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            font-size: 16px;
-        }
-        .email-footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 12px;
-            color: #aaa;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        background-color: #6a1b9a;
+        padding: 20px;
+        text-align: center;
+        color: #ffffff;
+      }
+      .header img {
+        max-width: 150px;
+        margin-bottom: 10px;
+      }
+      .header h1 {
+        margin: 0;
+        font-size: 24px;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .content h2 {
+        color: #333;
+        font-size: 22px;
+        margin-bottom: 10px;
+      }
+      .content p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+      }
+      .content a.button {
+        background-color: #6a1b9a;
+        color: #ffffff;
+        padding: 12px 25px;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+      .footer {
+        padding: 20px;
+        text-align: center;
+        color: #999;
+        font-size: 14px;
+        background-color: #f4f4f4;
+      }
     </style>
-</head>
-<body>
-    <div class="email-container">
-        <div class="email-header">
-            <img src="https://imgur.com/a/4WpsfqR" alt="Trendy Native Wears Logo">
-        </div>
-
-        <div class="email-body">
-            <h1>Welcome, {{firstName}}!</h1>
-            <p>"Welcome to Trendy Native Wears. We are pleased to have you. Please keep your eyes peeled for the verification link which you will recieve soon.\n Check our amazing products out and shop, spend your money.</p>
-        </div>
-
-        <div class="email-footer">
-            <p>If you didn't request this email, please ignore it.</p>
-            <p>&copy; Trendy Native Wears. All rights reserved.</p>
-        </div>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <img src="https://imgur.com/a/4WpsfqR" alt="Trendy Native Wears Logo" />
+        <h1>Verify Your Email</h1>
+      </div>
+      <div class="content">
+        <h2>Welcome to Trendy Native Wears, {{firstname}}!</h2>
+        <p>Welcome to Trendy Native Wears. We are pleased to have you. Please keep your eyes peeled for the verification link which you will recieve soon. Check our amazing products out and shop, spend your money.</p>
+      </div>
+      <div class="footer">
+        <p>
+          If you didn’t request this email, please ignore it. This email is only
+          valid for 24 hours.
+        </p>
+        <p>&copy; 2024 Trendy Native Wears. All rights reserved.</p>
+      </div>
     </div>
-</body>
+  </body>
 </html>
+
+
+
+
