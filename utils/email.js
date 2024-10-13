@@ -31,10 +31,10 @@ const sendEmail = async (options) => {
 
   
   const mailOptions = {
-    from: "TRENDY NATIVE WEARS <trendynativewears@gmail.com>",
-    to: options.email, 
-    subject: options.subject, 
-    text: options.message, 
+    from: "TRENDY NATIVE WEARS <samueliy185@gmail.com>",
+    to: options.email,
+    subject: options.subject,
+    text: options.message,
     html: htmlToSend,
   };
 
