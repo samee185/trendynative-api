@@ -89,16 +89,21 @@ const signup = async (req, res, next) => {
 
 const createAdminUser = async (req, res, next) => {
   try {
+    // Validate the signup data
     const validation = validateUserSignup(req.body);
-    if (!validation) {
-      throw new AppError(validation?.error.message, 400);
+    if (validation?.error) {
+      throw new AppError(validation.error.message, 400);
     }
+
     const { firstname, lastname, email, password } = req.body;
+
+    // Check if the user already exists
     const existingUser = await Users.findOne({ email });
     if (existingUser) {
       throw new AppError("User with this email already exists", 400);
     }
 
+    // Hash the password
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(password, salt);
 
@@ -111,40 +116,41 @@ const createAdminUser = async (req, res, next) => {
     });
 
     if (!adminUser) {
-      throw new AppError("Unable to create Admin");
+      throw new AppError("Unable to create Admin", 500);
     }
-
     await sendEmail({
       email: email,
       subject: "Welcome to Trendy Native Wears",
       template: "welcomeEmail",
       data: {
-        firstName: firstname,
-        lastName: lastname,
+        firstname: firstname,
+        lastname: lastname,
       },
     });
-
     const verificationToken = crypto.randomBytes(32).toString("hex");
-    console.log(verificationToken);
     const hashedVerificationToken = await bcrypt.hash(verificationToken, salt);
 
     const verificationUrl = `${req.protocol}://${req.get(
       "host"
-    )}/api/v1/auth/verify/${user.email}/${verificationToken}`;
+    )}/api/v1/auth/verify/${adminUser.email}/${verificationToken}`;
+
     await sendEmail({
       email: email,
       subject: "Verify your email address",
       template: "verificationEmail",
       data: {
-        firstName: firstname,
+        firstname: firstname,
         verificationUrl: verificationUrl,
       },
     });
+ 
+    adminUser.verification_token = hashedVerificationToken;
+    await adminUser.save();
 
-    user.verification_token = hashedVerificationToken;
-    await user.save();
+  
+    const token = signJWt(adminUser._id);
 
-    const token = signJWt(user._id);
+    
     res.status(201).json({
       status: "success",
       message: "Admin successfully created",
@@ -154,9 +160,10 @@ const createAdminUser = async (req, res, next) => {
       },
     });
   } catch (error) {
-    next(error);
+    next(error); 
   }
 };
+
 
 const login = async (req, res, next) => {
   try {
