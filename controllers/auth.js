@@ -1,13 +1,15 @@
-const Users = require("./../model/user");
+const Users = require("../model/user");
 const bcrypt = require("bcryptjs");
-const signJWt = require("./../utils/signJwt");
-const sendEmail = require("./../utils/email");
+const signJWt = require("../utils/signJwt");
+const sendEmail = require("../utils/email");
 const crypto = require("crypto");
 const AppError = require("../utils/AppError");
 const {
   validateUserSignup,
   validateUserLogin,
-} = require("./../validations/userValidation");
+} = require("../validation/userValidation");
+
+const blackListModel = require("../model/blackListToken");
 
 const signup = async (req, res, next) => {
   try {
@@ -85,6 +87,77 @@ const signup = async (req, res, next) => {
   }
 };
 
+const createAdminUser = async (req, res, next) => {
+  try {
+    const validation = validateUserSignup(req.body);
+    if (!validation) {
+      throw new AppError(validation?.error.message, 400);
+    }
+    const { firstName, lastName, email, password } = req.body;
+    const existingUser = await users.findOne({ email });
+    if (existingUser) {
+      throw new AppError("User with this email already exists", 400);
+    }
+
+    const salt = await bcrypt.genSalt(12);
+
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const adminUser = await users.create({
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      role: "admin",
+    });
+
+    if (!adminUser) {
+      throw new AppError("Unable to create Admin");
+    }
+
+    await sendEmail({
+      email: email,
+      subject: "Welcome to Trendy Native Wears",
+      template: "welcomeEmail",
+      data: {
+        firstName: firstname,
+        lastName: lastname,
+      },
+    });
+
+    const verificationToken = crypto.randomBytes(32).toString("hex");
+    console.log(verificationToken);
+    const hashedVerificationToken = await bcrypt.hash(verificationToken, salt);
+
+    const verificationUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/api/v1/auth/verify/${user.email}/${verificationToken}`;
+    await sendEmail({
+      email: email,
+      subject: "Verify your email address",
+      template: "verificationEmail",
+      data: {
+        firstName: firstname,
+        verificationUrl: verificationUrl,
+      },
+    });
+
+    user.verification_token = hashedVerificationToken;
+    await user.save();
+
+    const token = signJWt(user._id);
+    res.status(201).json({
+      status: "success",
+      message: "Admin successfully created",
+      data: {
+        adminUser,
+        token,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
 
 const login = async (req, res, next) => {
   try {
@@ -121,6 +194,33 @@ const login = async (req, res, next) => {
       status: "fail",
       message: error.message,
     });
+  }
+};
+
+const logInAdmin = async (req, res, next) => {
+  try {
+    const validation = validateUserLogIn(req.body);
+    if (validation?.error) {
+      throw new AppError(validation?.error.message, 400);
+    }
+    const { email, password } = req.body;
+    const adminUser = await users
+      .findOne({ email, role: "admin" })
+      .select("+password");
+    if (!adminUser || !(await bcrypt.compare(password, adminUser.password))) {
+      throw new AppError("email or password invalid", 401);
+    }
+    const token = generateToken(adminUser._id);
+    res.status(200).json({
+      status: "success",
+      message: "Admin user logged in successfully",
+      data: {
+        adminUser,
+        token,
+      },
+    });
+  } catch (error) {
+    next(error);
   }
 };
 
@@ -245,10 +345,43 @@ const resetPassword = async (req, res, next) => {
   }
 };
 
+const logOut = async (req, res) => {
+  try {
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(403).json({
+        status: "Error",
+        message: "No token provided",
+      });
+    }
+    const token = authHeader.split(" ")[1];
+
+    if (!token) {
+      return res.status(403).json({
+        status: "Error",
+        message: "No token provided",
+      });
+    }
+    await blackListModel.create({ token });
+    res.status(200).json({
+      status: "success",
+      message: "logout successful",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Something went wrong",
+    });
+  }
+};
+
 module.exports = {
   signup,
+  createAdminUser,
   login,
+  logInAdmin,
   verifyEmailAddress,
   forgotPassword,
   resetPassword,
+  logOut,
 };

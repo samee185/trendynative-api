@@ -1,8 +1,8 @@
 const AppError = require("../utils/AppError");
-const Products = require("./../model/product");
-const { dataUri } = require("./../utils/multer");
-const { uploader } = require("./../utils/cloudinary");
-const { validateCreateProduct } = require("./../validations/productValidation");
+const Products = require("../model/product");
+const { dataUri } = require("../utils/multer");
+const { uploader } = require("../utils/cloudinary");
+const { validateCreateProduct } = require("../validation/productValidation");
 const getAllProducts = async (req, res) => {
   try {
     const products = await Products.find()

@@ -4,7 +4,9 @@
   "description": "Trendy native wears online store",
   "main": "server.js",
   "scripts": {
-    "test": "npm run dev"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server",
+    "prod": "cross-env NODE_ENV=production nodemon server.js"
   },
   "keywords": [
     "Nodejs"
@@ -24,6 +26,7 @@
     "joi": "^17.13.3",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.7.1",
+    "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.1",
     "nodemailer": "^6.9.15",
     "nodemon": "^3.1.7"

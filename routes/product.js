@@ -5,9 +5,9 @@ const {
   getProductDetails,
   updateProductDetails,
   deleteProduct,
-} = require("./../controllers/product");
-const authMiddleware = require("./../middleware/auth");
-const { imageUploads } = require("./../utils/multer");
+} = require("../controllers/product");
+const authMiddleware = require("../middlewares/auth");
+const { imageUploads } = require("../utils/multer");
 
 const router = express.Router();
 router

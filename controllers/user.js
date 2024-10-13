@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
-const Users = require("./../model/user");
-const AppError = require("./../utils/AppError");
+const Users = require("../model/user");
+const AppError = require("../utils/AppError");
 
 const getAllUsers = async (req, res, next) => {
   try {
