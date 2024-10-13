@@ -93,14 +93,13 @@ const createAdminUser = async (req, res, next) => {
     if (!validation) {
       throw new AppError(validation?.error.message, 400);
     }
-    const { firstName, lastName, email, password } = req.body;
-    // const existingUser = await Users.findOne({ email });
-    // if (existingUser) {
-    //   throw new AppError("User with this email already exists", 400);
-    // }
+    const { firstname, lastname, email, password } = req.body;
+    const existingUser = await Users.findOne({ email });
+    if (existingUser) {
+      throw new AppError("User with this email already exists", 400);
+    }
 
     const salt = await bcrypt.genSalt(12);
-
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const adminUser = await Users.create({
