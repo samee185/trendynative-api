@@ -94,7 +94,7 @@ const createAdminUser = async (req, res, next) => {
       throw new AppError(validation?.error.message, 400);
     }
     const { firstName, lastName, email, password } = req.body;
-    const existingUser = await users.findOne({ email });
+    const existingUser = await Users.findOne({ email });
     if (existingUser) {
       throw new AppError("User with this email already exists", 400);
     }
