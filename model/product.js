@@ -10,17 +10,23 @@ const productSchema = new mongoose.Schema(
     },
     price: {
       type: Number,
-      min: [0, "Price must be greater than 0"],
-      max: [10000, "Price must be less than 1000"],
+      min: [1000, "Price must be greater than 1000"],
+      max: [100000000, "Price must be less than 100000000"],
       required: [true, "Please provide a price"],
     },
     description: {
       type: String,
       required: [true, "Please provide a description"],
     },
-    image: {
-      type: String,
-      required: [true, "Image is required"],
+    images: {
+      type: [String],
+      required: [true, "At least 4 images are required"],
+      validate: {
+        validator: function (value) {
+          return value.length >= 4 && value.length <= 6;
+        },
+        message: "A product must have between 4 and 6 images",
+      },
     },
     category: {
       type: String,
