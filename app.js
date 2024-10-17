@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
+const orderRoutes = require("./routes/orders");
 
 const app = express();
 app.use(express.json());
