@@ -26,9 +26,7 @@ const createOrder = asyncHandler(async (req, res) => {
       shippingPrice,
       totalPrice,
     });
-
     const createdOrder = await order.save();
-
     await sendEmail(req.user.email, "Order Placed", "orderPlaced", {
       name: req.user.name,
       orderId: createdOrder._id,
@@ -59,8 +57,7 @@ const getOrderById = asyncHandler(async (req, res) => {
   if (order) {
     res.json(order);
   } else {
-    res.status(404);
-    throw new Error("Order not found");
+    throw new AppError("Order not found", 404);
   }
 });
 
@@ -100,7 +97,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     res.json(updatedOrder);
   } else {
     res.status(404);
-    throw new Error("Order not found");
+    throw new AppError("Order not found");
   }
 });
 
