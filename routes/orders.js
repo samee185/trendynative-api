@@ -19,7 +19,6 @@ router.get(
   orderController.getOrders // Fetch all orders
 );
 
-// Route to get a specific order by ID
 router.get(
   "/:orderId",
   authMiddleware.protectRoute,
