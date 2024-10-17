@@ -26,18 +26,17 @@ router.get(
   orderController.getOrderById // Fetch order by ID
 );
 
-// Route to update an order's status
+
 router.patch(
   "/:orderId",
   authMiddleware.protectRoute,
-  orderController.updateOrderStatus // Update order status
+  orderController.updateOrderStatus 
 );
 
-// Route to get the logged-in user's orders
 router.get(
   "/my-orders",
   authMiddleware.protectRoute,
   orderController.getMyOrders
-); // Fetch user's orders
+); 
 
 module.exports = router;
