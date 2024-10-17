@@ -16,7 +16,7 @@ router.get(
   "/",
   authMiddleware.protectRoute,
   authMiddleware.verifyIsAdmin,
-  orderController.getOrders // Fetch all orders
+  orderController.getOrders 
 );
 
 router.get(
