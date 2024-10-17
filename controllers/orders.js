@@ -76,7 +76,6 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
     order.status = status;
     const updatedOrder = await order.save();
 
-    // Send email to the user about the order status update
     await sendEmail(
       order.user.email,
       "Order Status Updated",
@@ -88,7 +87,6 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
       }
     );
 
-    // Send email to the admin about the order status update
     await sendEmail(
       process.env.ADMIN_EMAIL,
       "Order Status Updated",
