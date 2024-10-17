@@ -23,7 +23,7 @@ router.get(
 router.get(
   "/:orderId",
   authMiddleware.protectRoute,
-  orderController.getOrderById // Fetch order by ID
+  orderController.getOrderById 
 );
 
 
