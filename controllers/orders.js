@@ -65,9 +65,6 @@ const getOrderById = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Update order status
-// @route PUT /api/orders/:id/status
-// @access Private/Admin
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
   const order = await Order.findById(req.params.id).populate(
