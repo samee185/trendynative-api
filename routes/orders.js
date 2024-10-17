@@ -11,7 +11,6 @@ router.post(
   orderController.createOrder
 );
 
-// Route to get all orders (admin only)
 router.get(
   "/",
   authMiddleware.protectRoute,
