@@ -4,7 +4,6 @@ const authMiddleware = require("../middlewares/auth");
 
 const router = express.Router();
 
-// Route to create a new order
 router.post(
   "/create",
   authMiddleware.protectRoute,
