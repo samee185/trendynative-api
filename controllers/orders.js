@@ -2,9 +2,6 @@ const asyncHandler = require("express-async-handler");
 const Order = require("../models/orderModel");
 const sendEmail = require("../utils/sendEmail");
 
-// @desc Place a new order
-// @route POST /api/orders
-// @access Private
 const createOrder = asyncHandler(async (req, res) => {
   const {
     orderItems,
@@ -33,14 +30,12 @@ const createOrder = asyncHandler(async (req, res) => {
 
     const createdOrder = await order.save();
 
-    // Send email to the user about order placement
     await sendEmail(req.user.email, "Order Placed", "orderPlaced", {
       name: req.user.name,
       orderId: createdOrder._id,
       totalPrice: createdOrder.totalPrice,
     });
 
-    // Send email to the admin about the new order
     await sendEmail(
       process.env.ADMIN_EMAIL,
       "New Order Placed",
@@ -56,9 +51,6 @@ const createOrder = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get an order by ID
-// @route GET /api/orders/:id
-// @access Private
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
     "user",
