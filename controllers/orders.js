@@ -29,10 +29,13 @@ const createOrder = asyncHandler(async (req, res) => {
       totalPrice,
     });
     const createdOrder = await order.save();
-    await sendEmail(req.user.email, "Order Placed", "orderPlaced", {
-      name: req.user.name,
+    await sendEmail(req.user.email, "Order Confirmed", "orderPlaced", {
+      name: req.user.firstname,
       orderId: createdOrder._id,
       totalPrice: createdOrder.totalPrice,
+      orderItems: createdOrder.orderItems,
+      shippingAddress: createdOrder.shippingAddress,
+      orderLink: `https://yourstore.com/orders/${createdOrder._id}`,
     });
 
     await sendEmail(
@@ -45,7 +48,6 @@ const createOrder = asyncHandler(async (req, res) => {
         totalPrice: createdOrder.totalPrice,
       }
     );
-
     res.status(201).json(createdOrder);
   }
 });

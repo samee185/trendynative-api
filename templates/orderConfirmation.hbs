@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            border: 1px solid #ddd;
+        }
+        .header {
+            background-color: #6c63ff;
+            padding: 20px;
+            text-align: center;
+            color: #fff;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .content {
+            padding: 20px;
+        }
+        .order-details {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #ddd;
+        }
+        .order-details h2 {
+            color: #6c63ff;
+        }
+        .order-item {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 10px;
+        }
+        .footer {
+            background-color: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            color: #777;
+            font-size: 12px;
+        }
+        .button {
+            background-color: #6c63ff;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 4px;
+            display: inline-block;
+        }
+        a {
+            color: #6c63ff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>Order Confirmed!</h1>
+        </div>
+        <!-- Content -->
+        <div class="content">
+            <p>Hi {{name}},</p>
+            <p>Thank you for shopping with us. We’ve received your order and it’s now being processed. Below are the details:</p>
+
+            <!-- Order Details -->
+            <div class="order-details">
+                <h2>Order #{{orderId}}</h2>
+                <p>Total Price: ${{totalPrice}}</p>
+
+                <!-- Item -->
+                {{#each orderItems}}
+                <div class="order-item">
+                    <p><strong>{{this.name}}</strong></p>
+                    <p>Quantity: {{this.qty}}</p>
+                    <p>Price: ${{this.price}}</p>
+                </div>
+                {{/each}}
+
+                <p>Shipping Address: {{shippingAddress}}</p>
+            </div>
+
+            <p>If you want to review your order or check the status, visit <a href="{{orderLink}}">Your Orders</a>.</p>
+
+            <p>Thank you for choosing us!</p>
+
+            <a href="{{orderLink}}" class="button">View Order</a>
+        </div>
+        <!-- Footer -->
+        <div class="footer">
+            <p>&copy; 2024 Trendy Native Wears. All Rights Reserved.</p>
+        </div>
+    </div>
+</body>
+</html>

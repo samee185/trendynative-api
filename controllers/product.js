@@ -27,7 +27,7 @@ const createNewProduct = asyncHandler(async (req, res, next) => {
     return uploader.upload(fileData, {
       folder: "TrendyNativeWears/Products",
     });
-  });
+  }); 
   const uploadResults = await Promise.all(uploadPromises);
   const imageUrls = uploadResults.map((result) => result.secure_url);
 
