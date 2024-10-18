@@ -13,7 +13,7 @@ const router = express.Router();
 router
   .route("/")
   .get(getAllProducts)
-  .post(authMiddleware.protectRoute, imageUploads, createNewProduct);
+  .post(authMiddleware.protectRoute,authMiddleware.verifyIsAdmin, imageUploads, createNewProduct);
 
 router
   .route("/:id")

@@ -3,7 +3,7 @@ const userController = require("../controllers/user");
 const authMiddleware = require("../middlewares/auth");
 const router = express.Router();
 
-router.route("/").get(userController.getAllUsers);
+router.route("/").get(authMiddleware.protectRoute,authMiddleware.verifyIsAdmin, userController.getAllUsers);
 
 router
   .route("/profile")

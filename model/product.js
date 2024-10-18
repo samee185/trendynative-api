@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 const productSchema = new mongoose.Schema(
   {
     title: {
@@ -30,10 +31,20 @@ const productSchema = new mongoose.Schema(
     category: {
       type: String,
       required: [true, "Category is required"],
+      enum: {
+        values: ["Agbada", "Men", "Women", "Kids"],
+        message:
+          "Category must be one of the following: Agbada, Men, Women, Kids",
+      },
     },
     size: {
       type: String,
       required: [true, "Size is required"],
+      enum: {
+        values: ["Small", "Medium", "Large", "XL", "2XL", "3XL"],
+        message:
+          "Size must be one of the following: Small, Medium, Large, XL, 2XL, 3XL",
+      },
     },
   },
   {
