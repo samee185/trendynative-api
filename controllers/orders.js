@@ -48,7 +48,14 @@ const createOrder = asyncHandler(async (req, res) => {
         totalPrice: createdOrder.totalPrice,
       }
     );
-    res.status(201).json(createdOrder);
+    res.status(201).json({
+      status: "success",
+      message: "Order created succesfully",
+      user: req.user._id,
+      data: {
+        createdOrder,
+      },
+    });
   }
 });
 
@@ -59,7 +66,13 @@ const getOrderById = asyncHandler(async (req, res) => {
   );
 
   if (order) {
-    res.json(order);
+    res.json({
+      status: "success",
+      message: "Order successfully fetched",
+      data: {
+        order,
+      },
+    });
   } else {
     throw new AppError("Order not found", 404);
   }
