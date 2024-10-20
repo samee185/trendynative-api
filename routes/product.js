@@ -7,13 +7,19 @@ const {
   deleteProduct,
 } = require("../controllers/product");
 const authMiddleware = require("../middlewares/auth");
-const { imageUploads } = require("../utils/multer");
+const { imageUploads, ensureMinImages } = require("../utils/multer");
 
 const router = express.Router();
 router
   .route("/")
   .get(getAllProducts)
-  .post(authMiddleware.protectRoute,authMiddleware.verifyIsAdmin, imageUploads, createNewProduct);
+  .post(
+    authMiddleware.protectRoute,
+    authMiddleware.verifyIsAdmin,
+    imageUploads,
+    ensureMinImages,
+    createNewProduct
+  );
 
 router
   .route("/:id")

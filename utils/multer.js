@@ -24,7 +24,7 @@ const imageUploads = multer({
       )
     );
   },
-}).array("image", 6);
+}).array("image", 4);
 
 const dUri = new DataUri();
 
