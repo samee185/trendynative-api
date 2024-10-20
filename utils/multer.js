@@ -28,7 +28,7 @@ const imageUploads = multer({
 
 const dUri = new DataUri();
 
-// Helper function to process individual files and return data URI
+
 const dataUri = (file) =>
   dUri.format(path.extname(file.originalname).toString(), file.buffer);
 
