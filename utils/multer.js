@@ -13,19 +13,26 @@ const imageUploads = multer({
     const extname = filetypes.test(
       path.extname(file.originalname).toLowerCase()
     );
+
     if (mimetype && extname) {
       return cb(null, true);
     }
     cb(
-      "Error: File upload only supports the following filetypes - " + filetypes
+      new Error(
+        "Error: File upload only supports the following filetypes - " +
+          filetypes
+      )
     );
   },
 }).array("image", 6);
 
 const dUri = new DataUri();
 
-const dataUri = (req) => dUri.format(path.extname(req.file.originalname).toString(), req.file.buffer);
+// Helper function to process individual files and return data URI
+const dataUri = (file) =>
+  dUri.format(path.extname(file.originalname).toString(), file.buffer);
 
+// Middleware to ensure at least 4 images are uploaded
 const ensureMinImages = (req, res, next) => {
   if (!req.files || req.files.length < 4) {
     return res.status(400).json({
@@ -33,8 +40,7 @@ const ensureMinImages = (req, res, next) => {
       message: "At least 4 images are required.",
     });
   }
-  next(); 
+  next();
 };
-
 
 module.exports = { dataUri, imageUploads, ensureMinImages };
