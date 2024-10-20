@@ -16,15 +16,6 @@ const validateCreateProduct = (object) => {
       .string()
       .required()
       .error(new Error("Please provide a product description")),
-      images: joi
-      .array()
-      .items(
-        joi.string().required().error(new Error("Each image must be a string"))
-      )
-      .min(4)
-      .max(6)
-      .required()
-      .error(new Error("Please provide between 4 and 6 images")),
     category: joi
       .string()
       .required()

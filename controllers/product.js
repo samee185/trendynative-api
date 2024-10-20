@@ -18,47 +18,16 @@ const getAllProducts = asyncHandler(async (req, res) => {
 });
 
 const createNewProduct = asyncHandler(async (req, res, next) => {
+  console.log("Files:", req.files); // Log uploaded files
+  console.log("Body:", req.body); // Log request body
+
   if (!req.files || req.files.length < 4) {
     throw new AppError("You must upload at least 4 images", 400);
   }
 
-  const uploadPromises = req.files.map((file) => {
-    const fileData = dataUri(file).content;
-    return uploader.upload(fileData, {
-      folder: "TrendyNativeWears/Products",
-    });
-  }); 
-  const uploadResults = await Promise.all(uploadPromises);
-  const imageUrls = uploadResults.map((result) => result.secure_url);
-
-  const validation = validateCreateProduct(req.body);
-  if (validation.error) {
-    throw new AppError(validation.error.message, 400);
-  }
-
-  const { title, price, description, category, size } = req.body;
-
-  const newProduct = await Products.create({
-    title,
-    price,
-    description,
-    category,
-    size,
-    images: imageUrls,
-  });
-
-  if (!newProduct) {
-    throw new AppError("An error occurred while creating the product", 404);
-  }
-
-  res.status(201).json({
-    status: "success",
-    message: "Product created successfully",
-    data: {
-      product: newProduct,
-    },
-  });
+  // Image uploading process continues...
 });
+
 
 const getProductDetails = asyncHandler(async (req, res) => {
   const { id } = req.params;

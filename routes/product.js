@@ -12,14 +12,18 @@ const { imageUploads, ensureMinImages } = require("../utils/multer");
 const router = express.Router();
 router
   .route("/")
-  .get(getAllProducts)
+  .get(getAllProducts);
+
+router
+  .route("/create-product")
   .post(
     authMiddleware.protectRoute,
     authMiddleware.verifyIsAdmin,
     imageUploads,
     ensureMinImages,
     createNewProduct
-  );
+  ); 
+ 
 
 router
   .route("/:id")
