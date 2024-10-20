@@ -1,6 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const DataUri = require("datauri/parser");
+const { console } = require("inspector");
 
 const storage = multer.memoryStorage();
 
@@ -34,6 +35,7 @@ const dataUri = (file) =>
 
 // Middleware to ensure at least 4 images are uploaded
 const ensureMinImages = (req, res, next) => {
+  console.log(req.files);
   if (!req.files || req.files.length < 4) {
     return res.status(400).json({
       status: "fail",
