@@ -5,12 +5,14 @@ const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 const productRoutes = require("./routes/product");
 const orderRoutes = require("./routes/orders");
+const { cloudinaryConfig } = require("./utils/cloudinary");
 
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("dev"));
 app.use(cors("*"));
+app.use("*", cloudinaryConfig);
 
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/auth", authRoutes);

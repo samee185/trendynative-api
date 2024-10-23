@@ -32,8 +32,7 @@ const dUri = new DataUri();
 
 const dataUri = (file) =>
   dUri.format(path.extname(file.originalname).toString(), file.buffer);
-
-// Middleware to ensure at least 4 images are uploaded
+  
 const ensureMinImages = (req, res, next) => {
   console.log(req.files);
   if (!req.files || req.files.length < 4) {

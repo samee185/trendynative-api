@@ -21,12 +21,6 @@ const productSchema = new mongoose.Schema(
     images: {
       type: [String],
       required: [true, "At least 4 images are required"],
-      validate: {
-        validator: function (value) {
-          return value.length >= 4 && value.length <= 6;
-        },
-        message: "A product must have between 4 and 6 images",
-      },
     },
     category: {
       type: String,

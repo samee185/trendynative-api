@@ -22,7 +22,7 @@ router
     imageUploads,
     ensureMinImages,
     createNewProduct
-  ); 
+  );  
  
 
 router
