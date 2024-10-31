@@ -26,7 +26,7 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Category is required"],
       enum: {
-        values: ["Men", "Women", "Kids"],
+        values: ["men", "women", "kids"],
         message:
           "Category must be one of the following: Men, Women, Kids",
       },
@@ -35,19 +35,18 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Category is required"],
       enum: {
-        values: ["Yoruba", "Igbo", "Hausa", "Edo", "Aso-oke", "Agbada", "Shoes"],
+        values: ["yoruba", "igbo", "hausa", "edo", "aso-oke", "agbada", "shoes"],
         message:
           "Category must be one of the following: Yoruba, Igbo, Hausa, Edo, Aso-oke, Agbada, Shoes"
       },
     },
     sizes: {
       type: [String],
-      required: [true, "Size is required"],
       enum: {
         values: ["Small", "Medium", "Large", "XL", "2XL", "3XL"],
         message:
           "Size must be one of the following: Small, Medium, Large, XL, 2XL, 3XL",
-      },
+       },
     },
   },
   {

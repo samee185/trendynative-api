@@ -37,12 +37,13 @@ const createNewProduct = asyncHandler(async (req, res, next) => {
     if (validation.error) {
       throw new AppError(validation.error.message, 400);
     }
-    const { title, price, description, category, sizes } = req.body;
+    const { title, price, description, category,subCategory, sizes } = req.body;
     const newProduct = await Products.create({
       title,
       price,
       description,
       category,
+      subCategory,
       sizes,
       images: imageUrls,
     });

@@ -20,10 +20,13 @@ const validateCreateProduct = (object) => {
       .string()
       .required()
       .error(new Error("Please provide a product category")),
+    subCategory: joi
+      .string()
+      .required()
+      .error(new Error("Please provide a product category")),
     size: joi
       .array()
       .items(joi.string().valid("Small", "Medium", "Large", "XL", "2XL", "3XL"))
-      .required()
       .error(new Error("Please provide a product size")),
   });
 

@@ -8,7 +8,7 @@ const {
   validateUserSignup,
   validateUserLogin,
 } = require("../validation/userValidation");
-const blackListModel = require("../model/blackListToken");
+const blackListModel = require("../model/blacklistToken");
 const asyncHandler = require("express-async-handler");
 
 const signup = asyncHandler(async (req, res, next) => {
