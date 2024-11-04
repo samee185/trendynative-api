@@ -108,6 +108,8 @@ const updateProductDetails = asyncHandler(async (req, res) => {
 
 const deleteProduct = asyncHandler(async (req, res) => {
   const { id } = req.params;
+  console.log(req.params);
+  
   await Products.findByIdAndDelete(id);
 
   res.status(204).json({

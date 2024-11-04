@@ -37,6 +37,7 @@ const protectRoute = async (req, res, next) => {
 
 const verifyIsAdmin = async (req, res, next) => {
   try {
+    console.log('---------testing ad---------',);
     if (req.user.role !== "admin") {
       throw new Error(
         "You are not authorized to access this route, this route belongs to admin users"

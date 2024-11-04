@@ -9,6 +9,7 @@ const imageUploads = multer({
   storage: storage,
   limits: { fileSize: 1024 * 1024 * 20 },
   fileFilter: (req, file, cb) => {
+    console.log('---------testing 1---------',);
     const filetypes = /jpg|jpeg|png/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(
@@ -34,8 +35,9 @@ const dataUri = (file) =>
   dUri.format(path.extname(file.originalname).toString(), file.buffer);
   
 const ensureMinImages = (req, res, next) => {
-  console.log(req.files);
+  console.log('------------------', req.files);
   if (!req.files || req.files.length < 4) {
+    console.log('---------testing---------',);
     return res.status(400).json({
       status: "fail",
       message: "At least 4 images are required.",
