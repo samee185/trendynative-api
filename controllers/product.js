@@ -31,7 +31,9 @@ const createNewProduct = asyncHandler(async (req, res, next) => {
         folder: "TrendyNativeWears/Products",
       });
     });
+    console.log('reach 1')
     const uploadResults = await Promise.all(uploadPromises);
+    console.log('reach 2')
     const imageUrls = uploadResults.map((result) => result.secure_url);
     const validation = validateCreateProduct(req.body);
     if (validation.error) {
@@ -61,6 +63,8 @@ const createNewProduct = asyncHandler(async (req, res, next) => {
     });
 
   } catch (error) {
+    console.log(error);
+    
     next(error);
   }
 });
