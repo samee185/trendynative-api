@@ -12,6 +12,7 @@ const sendEmail = async (options) => {
       user: email,
       pass: password,
     },
+    debug: true
   });
 
   const compileTemplate = (filePath, data) => {

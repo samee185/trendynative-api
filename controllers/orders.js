@@ -3,75 +3,59 @@ const Order = require("../model/orders");
 const sendEmail = require("../utils/email");
 const AppError = require("../utils/AppError");
 
-
-const createOrder = asyncHandler(async (req, res) => {
+const createOrder = asyncHandler(async (orderData, user) => {
   const {
     orderItems,
     shippingAddress,
-    paymentMethod,
     itemsPrice,
     taxPrice,
     shippingPrice,
     totalPrice,
-  } = req.body;
+  } = orderData;
 
-  if (orderItems && orderItems.length === 0) {
-    throw new AppError("No order items", 400);
-  } else {
-    const order = new Order({
-      user: req.user._id,
-      orderItems,
-      shippingAddress,
-      paymentMethod,
-      itemsPrice,
-      taxPrice,
-      shippingPrice,
-      totalPrice,
-    });
-    const createdOrder = await order.save();
-    await sendEmail(req.user.email, "Order Confirmed", "orderPlaced", {
-      name: req.user.firstname,
+  const order = new Order({
+    user: user._id,
+    orderItems,
+    shippingAddress,
+    itemsPrice,
+    taxPrice,
+    shippingPrice,
+    totalPrice,
+  });
+
+  const createdOrder = await order.save();
+
+  try {
+    // Send email to user
+    await sendEmail(user.email, "Order Confirmed", "orderPlaced", {
+      name: user.firstname,
       orderId: createdOrder._id,
       totalPrice: createdOrder.totalPrice,
       orderItems: createdOrder.orderItems,
       shippingAddress: createdOrder.shippingAddress,
-      orderLink: `https://yourstore.com/orders/${createdOrder._id}`,
     });
 
-    await sendEmail(
-      process.env.ADMIN_EMAIL,
-      "New Order Placed",
-      "orderPlaced",
-      {
-        name: req.user.name,
-        orderId: createdOrder._id,
-        totalPrice: createdOrder.totalPrice,
-      }
-    );
-    res.status(201).json({
-      status: "success",
-      message: "Order created succesfully",
-      user: req.user._id,
-      data: {
-        createdOrder,
-      },
+    // Notify admin
+    await sendEmail(process.env.ADMIN_EMAIL, "New Order Placed", "orderPlaced", {
+      name: user.name,
+      orderId: createdOrder._id,
+      totalPrice: createdOrder.totalPrice,
     });
+  } catch (error) {
+    console.error("Email sending failed:", error); // Log email errors but continue
   }
+
+  return createdOrder;
 });
 
 const getOrderById = asyncHandler(async (req, res) => {
-  const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
+  const order = await Order.findById(req.params.id).populate("user", "name email");
 
   if (order) {
     res.json({
       status: "success",
       message: "Order successfully fetched",
-      data: {
-        order,
-      },
+      data: { order },
     });
   } else {
     throw new AppError("Order not found", 404);
@@ -80,36 +64,27 @@ const getOrderById = asyncHandler(async (req, res) => {
 
 const updateOrderStatus = asyncHandler(async (req, res) => {
   const { status } = req.body;
-  const order = await Order.findById(req.params.id).populate(
-    "user",
-    "name email"
-  );
+  const order = await Order.findById(req.params.id).populate("user", "name email");
 
   if (order) {
     order.status = status;
     const updatedOrder = await order.save();
 
-    await sendEmail(
-      order.user.email,
-      "Order Status Updated",
-      "orderStatusUpdated",
-      {
+    try {
+      await sendEmail(order.user.email, "Order Status Updated", "orderStatusUpdated", {
         name: order.user.name,
         orderId: order._id,
         status: order.status,
-      }
-    );
+      });
 
-    await sendEmail(
-      process.env.ADMIN_EMAIL,
-      "Order Status Updated",
-      "orderStatusUpdated",
-      {
+      await sendEmail(process.env.ADMIN_EMAIL, "Order Status Updated", "orderStatusUpdated", {
         name: order.user.name,
         orderId: order._id,
         status: order.status,
-      }
-    );
+      });
+    } catch (error) {
+      console.error("Email sending failed:", error);
+    }
 
     res.json(updatedOrder);
   } else {

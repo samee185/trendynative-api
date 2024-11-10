@@ -13,5 +13,4 @@ router
 router
   .route("/update-password")
   .patch(authMiddleware.protectRoute, userController.updatePassword);
-
 module.exports = router;
