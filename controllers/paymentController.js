@@ -8,14 +8,14 @@ const payment_url = process.env.PAYMENT_URL;
 // Initiate Payment
 const initiatePayment = asyncHandler(async (req, res) => {
   try {
-    const { amount, userId, items } = req.body;  // Ensure userId and items are passed in the request body
-
-    // Ensure req.user is available
+    const { amount, userId, items } = req.body;  
+    console.log(req.body);
+    
     if (!req.user || !req.user.email) {
       return res.status(400).json({ success: false, message: 'User not authenticated' });
     }
 
-    const { email } = req.user;  // Destructure email from req.user
+    const { email } = req.user;  
 
     const initializeUrl = `${payment_url}/transaction/initialize`;
 
@@ -23,7 +23,7 @@ const initiatePayment = asyncHandler(async (req, res) => {
       initializeUrl,
       {
         email: email,
-        totalAmount: amount * 100,  // Paystack expects amount in kobo (1/100th of a Naira)
+        amount: amount * 100,  
         callback_url: 'https://trendynativewears.com/payment-callback',
       },
       {
@@ -31,9 +31,12 @@ const initiatePayment = asyncHandler(async (req, res) => {
           Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
         },
       }
+      
+      
     );
+    console.log(response.data);
+    
 
-    // Check if Paystack returned a valid response
     if (response.data && response.data.data && response.data.data.authorization_url) {
       res.json({
         success: true,
@@ -42,6 +45,7 @@ const initiatePayment = asyncHandler(async (req, res) => {
         user: userId,
         items: items,
       });
+      
     } else {
       res.status(400).json({ success: false, message: 'Payment initiation failed' });
     }
