@@ -8,14 +8,23 @@ const payment_url = process.env.PAYMENT_URL;
 // Initiate Payment
 const initiatePayment = asyncHandler(async (req, res) => {
   try {
-    const { userId, email, items, amount } = req.body;
+    const { amount, userId, items } = req.body;  // Ensure userId and items are passed in the request body
+
+    // Ensure req.user is available
+    if (!req.user || !req.user.email) {
+      return res.status(400).json({ success: false, message: 'User not authenticated' });
+    }
+
+    const { email } = req.user;  // Destructure email from req.user
+
+    const initializeUrl = `${payment_url}/transaction/initialize`;
 
     const response = await axios.post(
-      `${payment_url}/transaction/initialize`,
+      initializeUrl,
       {
-        email, // Customer's email
-        amount: amount * 100, // Paystack expects amount in kobo (or cents)
-        callback_url: 'https://trendynativewears.com/payment-callback', 
+        email: email,
+        totalAmount: amount * 100,  // Paystack expects amount in kobo (1/100th of a Naira)
+        callback_url: 'https://trendynativewears.com/payment-callback',
       },
       {
         headers: {
@@ -24,20 +33,20 @@ const initiatePayment = asyncHandler(async (req, res) => {
       }
     );
 
-    // Send the payment URL to the frontend for user to complete payment
-    if (response.data && response.data.data) {
+    // Check if Paystack returned a valid response
+    if (response.data && response.data.data && response.data.data.authorization_url) {
       res.json({
         success: true,
         payment_url: response.data.data.authorization_url,
         reference: response.data.data.reference,
         user: userId,
-        items
+        items: items,
       });
     } else {
       res.status(400).json({ success: false, message: 'Payment initiation failed' });
     }
   } catch (error) {
-    console.error('Payment initiation error:', error);
+    console.error('Payment initiation error:', error.response?.data || error);
     res.status(500).json({ success: false, message: 'Server error during payment initiation' });
   }
 });
