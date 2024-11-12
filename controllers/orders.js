@@ -83,7 +83,7 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
         status: order.status,
       });
     } catch (error) {
-      console.error("Email sending failed:", error);
+      console.error("Email sending failed::", error);
     }
 
     res.json(updatedOrder);
