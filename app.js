@@ -15,11 +15,11 @@ app.use(morgan("dev"));
 app.use(cors("*"));
 app.use("*", cloudinaryConfig);
 
-app.use("/api/v1/userss", userRoutes);
-app.use("/api/v1/auths", authRoutes);
-app.use("/api/v1/productss", productRoutes);
-app.use("/api/v1/orderss", orderRoutes );
-app.use("/api/v1/paymentssssssssss", paymentRoute);
+app.use("/api/v1/users", userRoutes);
+app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/products", productRoutes);
+app.use("/api/v1/orders", orderRoutes );
+app.use("/api/v1/payment", paymentRoute);
 
 app.all("*", (req, res) => {
   res.status(404).json({
