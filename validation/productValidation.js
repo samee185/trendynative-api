@@ -22,7 +22,6 @@ const validateCreateProduct = (object) => {
       .error(new Error("Please provide a product category")),
     subCategory: joi
       .string()
-      .required()
       .error(new Error("Please provide a product category")),
     size: joi
       .array()
