@@ -33,7 +33,6 @@ const productSchema = new mongoose.Schema(
     },
     subCategory: {
       type: String,
-      required: [true, "Category is required"],
       enum: {
         values: ["yoruba", "igbo", "hausa", "edo", "aso-oke", "agbada", "shoes"],
         message:
