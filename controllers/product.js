@@ -20,8 +20,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
 const createNewProduct = asyncHandler(async (req, res, next) => {
   console.log(req.files); 
   
-  if (!req.files || req.files.length < 4) {
-    throw new AppError("You must upload at least 4 images", 400);
+  if (!req.files || req.files.length < 2) {
+    throw new AppError("You must upload at least 2 images", 400);
   }
 
   try {

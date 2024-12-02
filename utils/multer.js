@@ -26,7 +26,7 @@ const imageUploads = multer({
       )
     );
   },
-}).array("images", 6);
+}).array("images", 2);
 
 const dUri = new DataUri();
 
@@ -36,11 +36,11 @@ const dataUri = (file) =>
   
 const ensureMinImages = (req, res, next) => {
   console.log('------------------', req.files);
-  if (!req.files || req.files.length < 4) {
+  if (!req.files || req.files.length < 2) {
     console.log('---------testing---------',);
     return res.status(400).json({
       status: "fail",
-      message: "At least 4 images are required.",
+      message: "At least 2 images are required.",
     });
   }
   next();
