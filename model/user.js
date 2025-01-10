@@ -45,7 +45,7 @@ const userSchema = new mongoose.Schema({
     type: String,
   },
 });
-
+  
 userSchema.methods.getFullName = function () {
   return `${this.firstname} ${this.lastname}`;
 };

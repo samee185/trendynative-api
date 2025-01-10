@@ -17,7 +17,7 @@ const validateCreateProduct = (object) => {
       .required()
       .error(new Error("Please provide a product description")),
     category: joi
-      .string()
+      .string() 
       .error(new Error("Please provide a product category")),
     subCategory: joi
       .string()

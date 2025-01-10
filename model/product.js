@@ -26,9 +26,9 @@ const productSchema = new mongoose.Schema(
       type: String,
       required: [true, "Category is required"],
       enum: {
-        values: ["men", "women", "unisex"],
+        values: ["men", "women", "unisex", "fragrance", "body spray"],
         message:
-          "Category must be one of the following: Men, Women, Kids",
+          "Category must be one of the following: Men, Women, Kids, fragrance",
       },
     },
     subCategory: {
