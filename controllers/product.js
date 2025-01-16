@@ -20,20 +20,18 @@ const getAllProducts = asyncHandler(async (req, res) => {
 const createNewProduct = asyncHandler(async (req, res, next) => {
   console.log(req.files); 
   
-  if (!req.files || req.files.length < 2) {
-    throw new AppError("You must upload at least 2 images", 400);
+  if (!req.files || req.files.length < 1) {
+    throw new AppError("You must upload an one image", 400);
   }
 
   try {
     const uploadPromises = req.files.map((file) => {
       const fileData = dataUri(file).content;
       return uploader.upload(fileData, {
-        folder: "TrendyNativeWears/Products",
+        folder: "Arewaxtra/Products",
       });
     });
-    console.log('reach 1')
     const uploadResults = await Promise.all(uploadPromises);
-    console.log('reach 2')
     const imageUrls = uploadResults.map((result) => result.secure_url);
     const validation = validateCreateProduct(req.body);
     if (validation.error) {
