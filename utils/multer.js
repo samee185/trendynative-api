@@ -9,7 +9,6 @@ const imageUploads = multer({
   storage: storage,
   limits: { fileSize: 1024 * 1024 * 20 },
   fileFilter: (req, file, cb) => {
-    console.log('---------testing 1---------',);
     const filetypes = /jpg|jpeg|png/;
     const mimetype = filetypes.test(file.mimetype);
     const extname = filetypes.test(
