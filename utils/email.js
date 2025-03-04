@@ -24,7 +24,7 @@ const sendEmail = async (options) => {
   const templatePath = path.join(
     __dirname,
     "../templates",
-    `${options.template}.hbs
+    `${options.template}.hbs`
   );
 
  
