@@ -43,7 +43,7 @@ const signup = asyncHandler(async (req, res, next) => {
     email: email,
     subject: "Welcome to Arewaxtra",
     template: "welcomeEmail",
-    data: { firstName: firstname, lastName: lastnam },
+    data: { firstName: firstname, lastName: lastname },
   });
 
   const verificationToken = crypto.randomBytes(32).toString("hex");
