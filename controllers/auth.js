@@ -41,7 +41,7 @@ const signup = asyncHandler(async (req, res, next) => {
 
   await sendEmail({
     email: email,
-    subject: "Welcome to Arewaxtr",
+    subject: "Welcome to Arewaxtra",
     template: "welcomeEmail",
     data: { firstName: firstname, lastName: lastname },
   });
