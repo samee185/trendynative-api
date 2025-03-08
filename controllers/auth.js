@@ -109,7 +109,7 @@ const createAdminUser = asyncHandler(async (req, res, next) => {
 
   const verificationUrl = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/auth/verify/${adminUser.email}/${verificationToken}`;
+  )}/api/v1/auth/verify/${adminUser.email}/${verificationToken}`
 
   await sendEmail({
     email: email,
