@@ -101,7 +101,7 @@ const createAdminUser = asyncHandler(async (req, res, next) => {
     email: email,
     subject: "Welcome to Trendy Native Wears",
     template: "welcomeEmail",
-    data: { firstname: firstname, lastname: lastname }
+    data: { firstname: firstname, lastname: lastname },
   });
 
   const verificationToken = crypto.randomBytes(32).toString("hex");
