@@ -94,7 +94,7 @@ const createAdminUser = asyncHandler(async (req, res, next) => {
   });
 
   if (!adminUser) {
-    throw new AppError("Unable to create Admin", 500);
+    throw new AppError("Unable to create Admin", 500)
   }
 
   await sendEmail({
