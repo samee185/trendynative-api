@@ -91,7 +91,7 @@ const createAdminUser = asyncHandler(async (req, res, next) => {
     email,
     password: hashedPassword,
     role: "admin",
-  });
+  })
 
   if (!adminUser) {
     throw new AppError("Unable to create Admin", 500);
